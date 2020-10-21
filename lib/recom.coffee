@@ -234,6 +234,14 @@ GERAPI =
         .catch((err) -> Utils.handle_error(request, err, reply) )
     )
 
+    # Testing
+    plugin.route(
+      method: 'GET',
+      path: '/testing',
+      handler: (request, reply) =>
+        reply.file('./test/testing.html', [])
+    )
+
     next()
 
 

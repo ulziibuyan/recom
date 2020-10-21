@@ -81,9 +81,10 @@ class HapiGER
 
   setup_server: ->
     @load_server_plugin('good', @options.logging_options)
+    @load_server_plugin('inert', {})
 
   add_server_routes: ->
-    @load_server_plugin('./the_hapi_ger', {ger : @_ger})
+    @load_server_plugin('./recom', {ger : @_ger})
 
   server_method: (method, args = []) ->
     d = bb.defer()
