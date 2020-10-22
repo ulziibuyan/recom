@@ -1,0 +1,27 @@
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+function recomFetch() {
+  $.post("/recommendations",
+  JSON.stringify({
+    "namespace": "prod",
+    "person": $('#party_id_input').val(),
+    "configuration": {
+      "actions": { "view": 5 }
+    }
+  }),
+  function(data, status){
+    $('#recomStrip').empty()
+    data.recommendations.forEach(function(recom, index) {
+      $("#recomStrip").append(
+        "<img src='https://manage.bmall.mn/images/products/"
+        + recom.thing + "/additionalL/original.jpg'>"
+      )
+    })
+  });
+}
+
+</script>
+PARTY_ID: <input id="party_id_input"> <button onclick="recomFetch()">fetch</button>
+<div id="recomStrip"></div>
