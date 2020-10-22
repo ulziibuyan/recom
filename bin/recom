@@ -1,2 +1,8 @@
 #!/usr/bin/env bash
-bin/hapiger
+
+hapiger --es rethinkdb --esoptions '{
+    "host":"localhost",
+    "port": 28015,
+    "db":"hapiger"
+  }'
+ 
