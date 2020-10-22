@@ -31,7 +31,7 @@ class HapiGER
     @options = _.defaults(options, {
       esm: 'memory'
       esmoptions: {}
-      port: 3456
+      port: 2620
       logging_options: {
         reporters: [{
           reporter: require('good-console'),
