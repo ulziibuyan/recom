@@ -1,4 +1,2 @@
-#!/usr/bin/env node
-
-require('coffee-script/register')
-require('../cli')()
+#!/usr/bin/env bash
+bin/hapiger
