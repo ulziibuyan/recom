@@ -267,6 +267,16 @@ curl -X DELETE 'http://localhost:3456/namespaces/movies'
 <br/>
 ***
 
+#### Build and Run Docker Image
+Due to a [dependency deprecation](https://github.com/alhazmy13/serverless-offline-python/issues/18) this app uses node 8 in Docker.
+
+To build and run a local docker image, run the below commands:
+
+```
+docker build -t docker build -t hapiger:local .
+docker run -p 3456:3456 hapiger:local
+```
+
 #### Clients
 
 1. Node.js client [ger-client](https://www.npmjs.com/package/ger-client)
