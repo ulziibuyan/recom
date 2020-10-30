@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+const randomInt = require('random-int')
+const axios = require('axios')
+const request = require('request')
+const fs = require('fs')
+const moment = require('moment')
+
+if (process.argv.length < 4) {
+  console.log('Usage: ... ' + process.argv[1] + ' <host:port> <json>')
+  process.exit()
+}
+host = process.argv[2]
+
+axios.post('http://' + host + '/namespaces', {
+    namespace: 'prod'
+  })
+  .then(function (response) {
+    console.log(response);
+
+    var training = JSON.parse(fs.readFileSync(process.argv[3], 'utf8'));
+    var data = training.results[0]
+    data.items.forEach(item =>
+      setTimeout(function() { send_event(item) }, randomInt(5 * 60 * 1000))
+    )
+  })
+  .catch(function (error) {
+    console.err(error);
+  });
+
+function send_event(item) {
+  // Example: 16-JUL-20 02.44.17.142000000 PM
+  var ts = moment(item.created_stamp, 'DD-MMM-YY hh.mm.ss.SSSSSSSSS a')
+  ts.add(3, 'years')
+  request.post(
+    'http://' + host + '/events',
+     {
+       json: {
+         events: [{
+              "namespace": "prod",
+              "person": item.party_id,
+              "action": "view",
+              "thing": item.product_id,
+              "expires_at": ts
+         }],
+       },
+     },
+     (error, res, body) => {
+       if (error) {
+         console.err(error)
+         return
+       }
+       console.log(`statusCode: ${res.statusCode}`)
+       console.log(body)
+     }
+  )
+}
