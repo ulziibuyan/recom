@@ -22,7 +22,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "hapi": "10.4.1",
+    "hapi": "16.6.2",
     "inert": "4.2.1",
     "joi": "6.9.0",
     "boom": "2.9.0",
@@ -36,7 +36,8 @@
     "ger": "0.0.98",
     "ger_rethinkdb_esm": "0.0.05",
     "ger_mysql_esm": "0.0.2",
-    "moment": "2.9.0"
+    "moment": "2.9.0",
+    "random-int": "^2.0.1"
   },
   "devDependencies": {
     "mocha": "2.3.3",
