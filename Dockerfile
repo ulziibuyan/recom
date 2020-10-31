@@ -1,7 +1,19 @@
-FROM node:8
+FROM node:12
 
-COPY . /app
+# Create app directory
+WORKDIR /usr/src/recom
 
-RUN npm install -g hapiger
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-CMD hapiger
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
+
+# Bundle app source
+COPY . .
+
+EXPOSE 2620
+CMD [ "bin/recom" ]
