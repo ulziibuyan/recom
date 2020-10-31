@@ -76,12 +76,14 @@ class HapiGER
   init_server: (esm = 'mem') ->
     #SETUP SERVER
     @_server = new Hapi.Server()
-    @_server.connection({ port: @options.port, routes: { cors:true } });
+    @_server.connection({ port: @options.port, routes: { cors:true, log:true } });
     @info = @_server.info
 
   setup_server: ->
     @load_server_plugin('good', @options.logging_options)
     @load_server_plugin('inert', {})
+    @load_server_plugin('vision', {})
+    @load_server_plugin('hapi-swagger', { info: { title: 'recom API documentation', version: require('../package').version }})
 
   add_server_routes: ->
     @load_server_plugin('./recom', {ger : @_ger})
