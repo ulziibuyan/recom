@@ -11,7 +11,7 @@ HapiGER = require('./lib/hapi_server')
 cli = ->
 
   environment = _.defaults( process.env, {
-    PORT: 4567
+    PORT: 2620
   })
 
 
@@ -19,7 +19,7 @@ cli = ->
     .version('0.0.2')
     .usage('[options]')
     .description('start a hapiger server')
-    .option('-p, --port <port>', 'the port to start the server on', 3456)
+    .option('-p, --port <port>', 'the port to start the server on', 2620)
     .option('-e, --es <esm>', 'select Event Store [memory, pg, rethinkdb, mysql]', 'memory')
     .option('-E, --esoptions <options>', 'JSON representation of Options for Event Store e.g. "{"url": "postgres://localhost/hapiger"}"
       \n\t memory -- {}
