@@ -81,6 +81,9 @@ GERAPI =
     plugin.route(
       method: 'GET',
       path: '/namespaces',
+      config:
+        tags: ['api']
+
       handler: (request, reply) =>
         ger.list_namespaces()
         .then( (namespaces) ->
@@ -92,6 +95,9 @@ GERAPI =
     plugin.route(
       method: 'DELETE',
       path: '/namespaces/{namespace}',
+      config:
+        tags: ['api']
+
       handler: (request, reply) =>
         namespace = request.params.namespace
         ger.namespace_exists(namespace)
@@ -114,6 +120,7 @@ GERAPI =
           override: 'application/json'
         validate:
           payload: namespace_request_schema
+        tags: ['api']
 
       handler: (request, reply) =>
         namespace = request.payload.namespace
@@ -136,6 +143,8 @@ GERAPI =
           override: 'application/json'
         validate:
           payload: events_request_schema
+        tags: ['api']
+
       handler: (request, reply) =>
         ger.events(request.payload.events)
         .then( (event) ->
@@ -154,6 +163,7 @@ GERAPI =
       config:
         validate:
           query: get_events_request_schema
+        tags: ['api']
 
       handler: (request, reply) =>
         query = {
@@ -181,6 +191,8 @@ GERAPI =
           override: 'application/json'
         validate:
           payload: recommendation_request_schema
+        tags: ['api']
+
       handler: (request, reply) =>
 
         person = request.payload.person
@@ -214,6 +226,7 @@ GERAPI =
           override: 'application/json'
         validate:
           payload: namespace_request_schema
+        tags: ['api']
 
       handler: (request, reply) =>
         ns = request.payload.namespace
