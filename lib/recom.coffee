@@ -133,6 +133,34 @@ GERAPI =
 
     ########### EVENTS routes ################
 
+    plugin.route(
+      method: 'GET',
+      path: '/learn/{party_id}/{product_id}',
+      config:
+        tags: ['api']
+
+      handler: (request, reply) =>
+        today = new Date
+        created_at = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        expires_at = (today.getFullYear() + 3) + '-' + (today.getMonth() + 1) + '-' + today.getDate()
+        event = {
+          "namespace": "prod",
+          "person": request.params.party_id,
+          "action": "view",
+          "thing": request.params.product_id,
+          "created_at": created_at,
+          "expires_at": expires_at
+        }
+        ger.events([event])
+        .then( (event) ->
+          reply(event)
+        )
+        .catch(GER.NamespaceDoestNotExist, (err) ->
+          Utils.handle_error(request, Boom.notFound("Namespace Not Found"), reply)
+        )
+        .catch((err) -> Utils.handle_error(request, err, reply) )
+    )
+
     #POST create event
     plugin.route(
       method: 'POST',
