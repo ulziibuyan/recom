@@ -209,6 +209,37 @@ GERAPI =
 
     ########### RECOMMENDATIONS routes ################
 
+    plugin.route(
+      method: 'GET',
+      path: '/recom/{party_id}/{product_id}',
+      config:
+        tags: ['api']
+
+      handler: (request, reply) =>
+        person = request.params.party_id
+        thing = request.params.product_id
+        namespace = "prod"
+        configuration = default_configuration
+        configuration.actions = {
+          "view": 5
+        }
+
+        ger.namespace_exists(namespace)
+        .then( (exists) ->
+          throw Boom.notFound() if !exists
+          if thing
+            promise = ger.recommendations_for_thing(namespace, thing, configuration)
+          else
+            promise = ger.recommendations_for_person(namespace, person, configuration)
+
+          promise
+        )
+        .then( (recommendations) ->
+          reply(recommendations)
+        )
+        .catch((err) -> Utils.handle_error(request, err, reply))
+    )
+
     #POST recommendations
     plugin.route(
       method: 'POST',
